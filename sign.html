@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Elite Auctions</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e67e22;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --danger: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 0;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .user-actions a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .user-actions a:hover {
+            color: var(--secondary);
+        }
+        
+        .primary-nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .primary-nav li {
+            margin-right: 20px;
+        }
+        
+        .primary-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .primary-nav a:hover, .primary-nav a.active {
+            border-bottom: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        /* Form styles */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        
+        .auth-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 900px;
+            overflow: hidden;
+        }
+        
+        .auth-tabs {
+            display: flex;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            background-color: var(--light);
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--dark);
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            background-color: white;
+            color: var(--secondary);
+            border-bottom: 3px solid var(--secondary);
+        }
+        
+        .auth-content {
+            display: flex;
+        }
+        
+        .auth-form {
+            flex: 1;
+            padding: 30px;
+        }
+        
+        .auth-image {
+            flex: 1;
+            background-image: url('/api/placeholder/450/500');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .auth-image-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .auth-image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--secondary);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+        
+        .form-footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-login {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .social-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 4px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .google-btn {
+            background-color: #DB4437;
+        }
+        
+        .facebook-btn {
+            background-color: #4267B2;
+        }
+        
+        .or-divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .or-divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 45%;
+            height: 1px;
+            background-color: #ddd;
+        }
+        
+        .or-divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 45%;
+            height: 1px;
+            background-color: #ddd;
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .user-actions {
+                margin-top: 15px;
+            }
+            
+            .primary-nav ul {
+                flex-wrap: wrap;
+            }
+            
+            .auth-content {
+                flex-direction: column;
+            }
+            
+            .auth-image {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="#" class="logo">Elite<span>Auctions</span></a>
+                <div class="user-actions">
+                    <a href="#">Sign In</a>
+                    <a href="#">Register</a>
+                    <a href="#">My Bids</a>
+                </div>
+            </div>
+            <nav class="primary-nav">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Live Auctions</a></li>
+                    <li><a href="#">Upcoming Auctions</a></li>
+                    <li><a href="#">Completed Auctions</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-tabs">
+                        <div class="auth-tab active" id="signin-tab">Sign In</div>
+                        <div class="auth-tab" id="register-tab">Register</div>
+                    </div>
+                    
+                    <div class="auth-content">
+                        <div class="auth-form" id="signin-form">
+                            <h2 style="margin-bottom: 20px; color: var(--primary);">Welcome Back</h2>
+                            <p style="margin-bottom: 30px; color: #777;">Sign in to access your account and continue bidding on exclusive items.</p>
+                            
+                            <form action="#" method="post">
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                    <label style="display: flex; align-items: center;">
+                                        <input type="checkbox" style="margin-right: 5px;"> Remember me
+                                    </label>
+                                    <a href="#" style="color: var(--accent);">Forgot Password?</a>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-block">Sign In</button>
+                            </form>
+                            
+                            <div class="or-divider">OR</div>
+                            
+                            <div class="social-login">
+                                <a href="#" class="social-btn google-btn">Sign in with Google</a>
+                                <a href="#" class="social-btn facebook-btn">Sign in with Facebook</a>
+                            </div>
+                            
+                            <div class="form-footer">
+                                <p>Don't have an account? <a href="#" id="show-register">Register Now</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="auth-form" id="register-form" style="display: none;">
+                            <h2 style="margin-bottom: 20px; color: var(--primary);">Create Account</h2>
+                            <p style="margin-bottom: 30px; color: #777;">Join EliteAuctions and start bidding on exclusive furniture and art pieces.</p>
+                            
+                            <form action="#" method="post">
+                                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                                    <div class="form-group" style="flex: 1;">
+                                        <label for="first-name">First Name</label>
+                                        <input type="text" id="first-name" class="form-control" placeholder="Enter first name" required>
+                                    </div>
+                                    
+                                    <div class="form-group" style="flex: 1;">
+                                        <label for="last-name">Last Name</label>
+                                        <input type="text" id="last-name" class="form-control" placeholder="Enter last name" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="reg-email">Email Address</label>
+                                    <input type="email" id="reg-email" class="form-control" placeholder="Enter your email" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="reg-password">Password</label>
+                                    <input type="password" id="reg-password" class="form-control" placeholder="Create a password" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="confirm-password">Confirm Password</label>
+                                    <input type="password" id="confirm-password" class="form-control" placeholder="Confirm your password" required>
+                                </div>
+                                
+                                <div style="margin-bottom: 20px;">
+                                    <label style="display: flex; align-items: start; cursor: pointer;">
+                                        <input type="checkbox" style="margin-right: 10px; margin-top: 4px;" required>
+                                        <span style="font-size: 14px;">I agree to the <a href="#" style="color: var(--accent);">Terms of Service</a> and <a href="#" style="color: var(--accent);">Privacy Policy</a></span>
+                                    </label>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-block">Create Account</button>
+                            </form>
+                            
+                            <div class="form-footer">
+                                <p>Already have an account? <a href="#" id="show-signin">Sign In</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="auth-image">
+                            <div class="auth-image-content">
+                                <h2 style="font-size: 26px; margin-bottom: 15px;">Discover Exclusive Auctions</h2>
+                                <p style="margin-bottom: 20px;">Join our community of collectors and enthusiasts to bid on premium furniture and art pieces.</p>
+                                <ul style="list-style: none; text-align: left; margin-bottom: 30px;">
+                                    <li style="margin-bottom: 10px;">✓ Access to exclusive auctions</li>
+                                    <li style="margin-bottom: 10px;">✓ Save favorite items</li>
+                                    <li style="margin-bottom: 10px;">✓ Get notifications for new auctions</li>
+                                    <li style="margin-bottom: 10px;">✓ Track your bidding history</li>
+                                </ul>
+                                <div>
+                                    <a href="#" class="btn">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Us</h3>
+                    <p>With 25 years of experience in the auction industry, EliteAuctions is proud to bring our expertise to the digital world.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="">Home</a></li>
+                        <li><a href="#">Live Auctions</a></li>
+                        <li><a href="#">Completed Auctions</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Sitemap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#">Furniture</a></li>
+                        <li><a href="#">Paintings</a></li>
+                        <li><a href="#">Lighting</a></li>
+                        <li><a href="#">Decorative Arts</a></li>
+                        <li><a href="#">All Categories</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Support</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 EliteAuctions. All rights reserved. 25 years of excellence in auction services.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const signinTab = document.getElementById('signin-tab');
+            const registerTab = document.getElementById('register-tab');
+            const signinForm = document.getElementById('signin-form');
+            const registerForm = document.getElementById('register-form');
+            const showRegister = document.getElementById('show-register');
+            const showSignin = document.getElementById('show-signin');
+            
+            // Tab switching functionality
+            signinTab.addEventListener('click', function() {
+                signinTab.classList.add('active');
+                registerTab.classList.remove('active');
+                signinForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            });
+            
+            registerTab.addEventListener('click', function() {
+                registerTab.classList.add('active');
+                signinTab.classList.remove('active');
+                registerForm.style.display = 'block';
+                signinForm.style.display = 'none';
+            });
+            
+            // Link functionality
+            showRegister.addEventListener('click', function(e) {
+                e.preventDefault();
+                registerTab.click();
+            });
+            
+            showSignin.addEventListener('click', function(e) {
+                e.preventDefault();
+                signinTab.click();
+            });
+        });
+    </script>
+</body>
+</html>
